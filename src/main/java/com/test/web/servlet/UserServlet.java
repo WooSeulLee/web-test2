@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.test.web.service.UserService;
+import com.test.web.vo.UserVO;
 
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -29,7 +30,8 @@ public class UserServlet extends HttpServlet {
 			}else if("user-view".equals(cmd)) {
 				
 			}else if("user-insert".equals(cmd)) {
-				
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/user-insert.jsp"); //WEB-INF는 외부에서 접근이 불가해서 사용
+				rd.forward(request, response);
 			}else {
 				response.sendError(HttpServletResponse.SC_NOT_FOUND); //404에러
 			}
@@ -44,9 +46,43 @@ public class UserServlet extends HttpServlet {
 		// /user/user-insert
 	}
 
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		String cmd = request.getRequestURI();
+		int idx = cmd.lastIndexOf("/");
+		cmd = cmd.substring(idx+1);
+		
+		String uiNumStr = request.getParameter("uiNum");
+		String uiBirth = request.getParameter("uiBirth");
+		if(uiBirth!=null) {
+			uiBirth=uiBirth.replace("-", "");
+		}
+		String[] uiHobbies = request.getParameterValues("uiHobby");
+		
+		UserVO user = new UserVO();
+		if(uiNumStr!=null) {
+			int uiNum = Integer.parseInt(uiNumStr);
+			user.setUiNum(uiNum);
+		}
+		user.setUiName(request.getParameter("uiName"));
+		user.setUiId(request.getParameter("uiId"));
+		user.setUiPwd(request.getParameter("uiPwd"));
+		user.setUiGender(request.getParameter("uiGender"));
+		user.setUiDesc(request.getParameter("uiBDesc"));
+		if(uiHobbies!=null) {
+			String uiHobby="";
+			for(String hobby: uiHobbies) {
+				uiHobby+=hobby+",";
+			}
+			uiHobby = uiHobby.substring(0,uiHobby.length()-1);
+			user.setUiHobby(uiHobby);
+		}
+		try {
+			if("user-insert".equals(cmd)) {
+				int result = us.inertUser(user);
+			}
+		}catch(SQLException sqle) {
+			
+		}
 	}
 
 }

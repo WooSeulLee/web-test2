@@ -16,11 +16,20 @@
   
   <servlet>
   	<servlet-name>UserServlet</servlet-name>
-  	<servlet-class>com.test.web.servlet.UserServlet</servlet-class>
+  	<servlet-class>com.test.web.servlet.UserServlet</servlet-class> <!-- load-on startup 태그를 쓰면 호출 안해도 메모리 생성 -->
   </servlet>
   <servlet-mapping>
   	<servlet-name>UserServlet</servlet-name>
   	<url-pattern>/user/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>CarServlet</servlet-name>
+  	<servlet-class>com.test.web.servlet.CarServlet</servlet-class> <!-- load-on startup 태그를 쓰면 호출 안해도 메모리 생성 -->
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>CarServlet</servlet-name>
+  	<url-pattern>/car/*</url-pattern>
   </servlet-mapping>
   
 </web-app>

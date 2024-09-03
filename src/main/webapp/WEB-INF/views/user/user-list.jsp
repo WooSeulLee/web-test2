@@ -33,7 +33,7 @@ for(UserVO user : users){
 <button onclick="goPage()"> 유저등록 </button>
 <script>
 function goPage(){
-	location.href='/views/user/user-insert';
+	location.href='/user/user-insert';
 }
 </script>
 </body>

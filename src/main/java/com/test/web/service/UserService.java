@@ -12,6 +12,7 @@ import com.test.web.vo.UserVO;
 import common.DBCon;
 
 public class UserService {
+	
 	public int inertUser(UserVO user) throws SQLException {
 		Connection con = DBCon.getCon();
 		String sql = "INSERT INTO USER_INFO\r\n"
