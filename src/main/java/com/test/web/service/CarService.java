@@ -13,11 +13,11 @@ public class CarService {
 	}
 	
 	public int updateCar(CarVO car) {
-		return cr.insertCar(car);
+		return cr.updateCar(car);
 	}
 	
-	public int delete(CarVO car) {
-		return cr.insertCar(car);
+	public int deleteCar(int ciNum) {
+		return cr.deleteCar(ciNum);
 	}
 	
 	public List<CarVO> selectCars(){

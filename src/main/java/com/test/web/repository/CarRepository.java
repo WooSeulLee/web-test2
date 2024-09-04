@@ -45,6 +45,7 @@ public class CarRepository {
 		return 0;
 	}
 	
+	
 	public int deleteCar(int ciNum) {
 		try(Connection con = DBCon.getCon();){
 			String sql = "DELETE FROM CAR_INFO WHERE CI_NUM=?";
@@ -75,6 +76,7 @@ public class CarRepository {
 			}
 		}catch(SQLException e) {
 			
+			
 		}
 		return cars;
 	}
@@ -104,6 +106,8 @@ public class CarRepository {
 		CarRepository cr = new CarRepository();
 		CarVO car = new CarVO();
 		car.setCiNum(4);
+		System.out.println(car);
+		
 		
 		List<CarVO> cars = cr.selectCars();
 		for(CarVO c : cars) {

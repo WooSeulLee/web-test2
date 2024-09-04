@@ -32,4 +32,13 @@
   	<url-pattern>/car/*</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>MenuServlet</servlet-name>
+  	<servlet-class>com.test.web.servlet.MenuServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>MenuServlet</servlet-name>
+  <url-pattern>/menu/*</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

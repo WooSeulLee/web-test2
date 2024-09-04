@@ -27,6 +27,14 @@ public class CarServlet extends HttpServlet {
 			request.setAttribute("cars", cars);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views" + uri + ".jsp");
 			rd.forward(request, response);
+		}else if("car-view".equals(cmd) || "car-update".equals(cmd)){
+			String ciNumStr = request.getParameter("ciNum");
+			int ciNum = Integer.parseInt(ciNumStr);
+			//int ciNum = Integer.parsInt(request.getParameter("ciNum"));
+			CarVO car = cs.selectCar(ciNum);
+			request.setAttribute("car", car);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views" + uri + ".jsp");
+			rd.forward(request, response);
 		}
 	}
 
@@ -49,7 +57,39 @@ public class CarServlet extends HttpServlet {
 			request.setAttribute("url", url);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 			rd.forward(request, response);
-			return;
+			return; 
+		}else if("car-update".equals(cmd)) {
+			String ciNumStr = request.getParameter("ciNum");
+			int ciNum = Integer.parseInt(ciNumStr);
+			car.setCiNum(ciNum);
+			int result = cs.updateCar(car);
+			String msg = "차량수정이 실패했습니다";
+			String url = "/views/car/car-update?ciNum=" + ciNum;
+			if(result==1) {
+				msg="차량수정에 성공했습니다";
+				url="/car/car-view?ciNum=" + ciNum;
+			}
+			request.setAttribute("msg", msg);
+			request.setAttribute("url", url);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+			rd.forward(request, response);
+			return; 
+		}else if("car-delete".equals(cmd)) {
+			String ciNumStr = request.getParameter("ciNum");
+			int ciNum = Integer.parseInt(ciNumStr);
+			car.setCiNum(ciNum);
+			int result = cs.deleteCar(ciNum);
+			String msg = "차량삭제가 실패했습니다";
+			String url = "/views/car/car-view?ciNum=" + ciNum;
+			if(result==1) {
+				msg="차량삭제에 성공했습니다";
+				url="/car/car-list";
+			}
+			request.setAttribute("msg", msg);
+			request.setAttribute("url", url);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+			rd.forward(request, response);
+			return; 
 		}
 		
 	}

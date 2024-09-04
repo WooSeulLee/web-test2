@@ -21,7 +21,7 @@
 %>
 		<tr>
 			<td><%=car.getCiNum() %></td>
-			<td><%=car.getCiName() %></td>
+			<td><a href ="/car/car-view?ciNum=<%= car.getCiNum()%>"><%=car.getCiName() %></a></td>
 			<td><%=car.getCiYear() %></td>
 		</tr>
 <%
@@ -31,3 +31,5 @@
 	<a href="/views/car/car-insert">차량등록</a>
 </body>
 </html>
+
+
