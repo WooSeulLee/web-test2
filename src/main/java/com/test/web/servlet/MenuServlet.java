@@ -2,7 +2,9 @@ package com.test.web.servlet;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -43,9 +45,33 @@ public class MenuServlet extends HttpServlet {
 			request.setAttribute("menu", menu);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views" + uri + ".jsp");
 			rd.forward(request, response);
+			return;
 		}
 	}
 
+		
+	static Map<String, String> getMap(List<FileItem> items){
+		Map<String, String> param = new HashMap<>();
+			try {
+				for(FileItem item : items) {
+					if(item.isFormField()) {
+						param.put(item.getFieldName(), item.getString("UTF-8"));
+					}else {
+						String fileName = item.getName();
+						int idx = fileName.lastIndexOf(".");
+						fileName = System.nanoTime() + fileName.substring(idx);
+						File f = new File(UPLOAD_PATH + fileName);
+						item.write(f);
+						param.put(item.getFieldName(), "/upload/" + fileName);
+					}
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		
+		return param;
+	}
+			
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 //		String uri = request.getRequestURI();
@@ -89,34 +115,28 @@ public class MenuServlet extends HttpServlet {
 		boolean isMultiPart = ServletFileUpload.isMultipartContent(request);
 		System.out.println(isMultiPart);
 		
-		DiskFileItemFactory factory = new DiskFileItemFactory(); //임시저장 팩토리
-		factory.setSizeThreshold(1024*1024*1024);
-		factory.setRepository(new File(UPLOAD_PATH));
-		
-		ServletFileUpload sfu = new ServletFileUpload(factory);
-		
-		try {
-			List<FileItem> items = sfu.parseRequest(request); 
-			for(FileItem item : items) {
+		if(isMultiPart){
+			DiskFileItemFactory factory = new DiskFileItemFactory(); //임시저장 팩토리
+			factory.setSizeThreshold(1024*1024*1024);
+			factory.setRepository(new File(UPLOAD_PATH));
+			
+			ServletFileUpload sfu = new ServletFileUpload(factory);
+			try {
+				List<FileItem> items = sfu.parseRequest(request);
+				Map<String, String> param = getMap(items);
 				
-				if(item.isFormField()) { //input태그 등등
-					System.out.print(item.getString("UTF-8")+", ");
-				}else {
-					File f = new File(UPLOAD_PATH + item.getName());
-					try {
-						item.write(f);
-					}catch(Exception e) {
-						e.printStackTrace();
-					}
-				}
-				System.out.print(item.isFormField()+", ");
-				System.out.print(item.getContentType()+", ");
-				System.out.print(item.getFieldName()+", ");
-				System.out.print(item.getName()+", ");
-				System.out.println(item.getSize());
+				MenuVO menu = new MenuVO();
+				menu.setMiName(param.get("miName"));
+				menu.setMiPrice(Integer.parseInt(param.get("miPrice")));
+				menu.setMiDesc(param.get("miDesc"));
+				menu.setMiPath(param.get("miImg"));
+				ms.insertMenu(menu);
+				
+			} catch (FileUploadException e) {
+				e.printStackTrace();
 			}
-		} catch (FileUploadException e) {
-			e.printStackTrace();
+		}else {
+			
 		}
 		
 	}

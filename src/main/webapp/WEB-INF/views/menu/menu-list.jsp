@@ -22,7 +22,7 @@
 %>
 		<tr>
 			<td><%=menu.getMiNum()%></td>
-			<td><a href="/menu/menu-view?miNum=<%=menu.getMiNum()%>"><%=menu.getMiName()%></a></td>
+			<td><a href="/menu/menu-view?miNum=<%=menu.getMiNum()%>"><%=menu.getMiName()%></a></td> 
 			<td><%=menu.getMiPrice() %></td>
 		</tr>
 <%

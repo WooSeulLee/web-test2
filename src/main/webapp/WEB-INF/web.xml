@@ -41,4 +41,13 @@
   <url-pattern>/menu/*</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  <servlet-name>MovieServlet</servlet-name>
+  <servlet-class>com.test.web.servlet.MovieServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>MovieServlet</servlet-name>
+  <url-pattern>/movie/*</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

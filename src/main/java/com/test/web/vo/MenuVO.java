@@ -5,6 +5,8 @@ public class MenuVO {
 	private String miName;
 	private int miPrice;
 	private String miDesc;
+	private String miPath;
+	
 	public int getMiNum() {
 		return miNum;
 	}
@@ -29,9 +31,16 @@ public class MenuVO {
 	public void setMiDesc(String miDesc) {
 		this.miDesc = miDesc;
 	}
-	@Override
-	public String toString() {
-		return "MenuVO [miNum=" + miNum + ", miName=" + miName + ", miPrice=" + miPrice + ", miCesc=" + miDesc + "]";
+	public String getMiPath() {
+		return miPath;
+	}
+	public void setMiPath(String miPath) {
+		this.miPath = miPath;
 	}
 	
+	@Override
+	public String toString() {
+		return "MenuVO [miNum=" + miNum + ", miName=" + miName + ", miPrice=" + miPrice + ", miDesc=" + miDesc
+				+ ", miPath=" + miPath + "]";
+	}
 }

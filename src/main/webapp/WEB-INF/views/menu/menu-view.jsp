@@ -31,6 +31,11 @@
 			<td><%=menu.getMiDesc()%></td>
 		</tr>
 		<tr>
+			<th>메뉴사진</th>
+			<td><img src="<%=menu.getMiPath()%>"></td>
+		</tr>
+		
+		<tr>
 			<th colspan="2"><button type="button" onclick="location.href='/menu/menu-update?miNum=<%=menu.getMiNum()%>'">메뉴 수정</button>
 			<button>삭제</button></th>
 		</tr>
